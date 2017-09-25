@@ -13,3 +13,13 @@ Notes
   * horizontalZeroLineVisible
   * verticalGridLinesVisible
   * verticalZeroLineVisible
+
+Bindings
+++++++++++++++++++++++++
+* List site to Text: textProperty().bind(Bindings.size(list).asString());
+* FilteredList size to text: textProperty().bind(Bindings.size(list.filtered(u -> u.statusProperty().get())).asString());
+* Double to porgess: progressProperty().bind(Bindings.when(Bindings.size(list).greaterThan(0)).then(Bindings.size(list2).divide(Bindings.size(list).add(0.00001))).otherwise(0));
+
+Model
+++++++++++++++++++++++++
+* UIModel, OberservedUIModel
