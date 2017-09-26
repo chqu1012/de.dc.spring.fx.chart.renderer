@@ -16,3 +16,5 @@
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+https://stackoverflow.com/questions/29785996/javafx-bindings-is-there-any-way-to-bind-value-to-observable-list
