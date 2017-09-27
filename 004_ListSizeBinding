@@ -1,0 +1,1 @@
+arbeiterLabel.textProperty().bind(Bindings.size(masterData.filtered(u->u.getStatus()==0)).asString());
