@@ -1,0 +1,5 @@
+import controller.screensframework.ScreensController;
+
+public interface ControlledScreen {
+    void setScreenParent(ScreensController screenParent);
+}
