@@ -1,0 +1,3 @@
+public static final String determineFilePathFromPackageName(final Class<?> clazz) {	
+   return "/" + clazz.getPackage().getName().replace('.', '/') + "/";	
+}
