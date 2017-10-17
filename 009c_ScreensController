@@ -1,0 +1,110 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+
+import java.util.HashMap;
+
+public class ScreensController extends StackPane {
+
+    private final Logger logger = LogManager.getLogger(this.getClass());
+
+    private HashMap<String, Node> screens = new HashMap<>();
+
+    void addScreen(String name, Node screen) {
+        screens.put(name, screen);
+    }
+
+    // returns the Node with the appropriate name
+    public Node getScreen(String name) {
+        return screens.get(name);
+    }
+
+    boolean loadScreen(String name, String resource) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(resource));
+            Parent loadScreen = (Parent) fxmlLoader.load();
+            ControlledScreen screenControler = ((ControlledScreen) fxmlLoader.getController());
+            screenControler.setScreenParent(this);
+            addScreen(name, loadScreen);
+            return true;
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean setScreen(final String name) {
+
+        if(screens.get(name) != null) { // screen loaded
+
+            // TRANSISTIONING BETWEEN TWO SCREENS
+            final DoubleProperty opacity = opacityProperty();
+
+            // If there is more than one screen
+            if (!getChildren().isEmpty()) {
+                Timeline fade = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                        new KeyFrame(new Duration(800),
+
+                                new EventHandler<ActionEvent>() {
+
+                                    @Override
+                                    public void handle(ActionEvent t) {
+
+                                        // remove displayed screen
+                                        getChildren().remove(0);
+
+                                        // add new screen
+                                        getChildren().add(0, screens.get(name));
+                                        ScreensFramework.resizeScreen();
+
+                                        Timeline fadeIn = new Timeline(
+                                                new KeyFrame(Duration.ZERO,
+                                                        new KeyValue(opacity, 0.0)),
+                                                new KeyFrame(new Duration(400),
+                                                        new KeyValue(opacity, 1.0)));
+
+                                        fadeIn.play();
+                                    }
+                                }, new KeyValue(opacity, 0.0)));
+                fade.play();
+
+            } else {
+                // no one else been displayed, then just show
+                // SIMPLE SCENARIO (e.g. while starting the app)
+                setOpacity(0.0);    // a node with 0% opacity is fully translucent
+                getChildren().add(screens.get(name));
+
+                // this part is an optional animation
+
+                Timeline fadeIn = new Timeline(
+                        new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+                        new KeyFrame(new Duration(400), new KeyValue(opacity, 1.0)));
+                fadeIn.play();
+                // ...till here
+            }
+            return true;
+        } else {
+            // which means that basically there is nothing in screens hashmap
+            logger.warn("Screen hasn't been loaded. ");
+            return false;
+        }
+    }
+
+    public boolean unloadScreen(String name) {
+        if(screens.remove(name) == null) {
+            logger.error("Screen didn't exist");
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
