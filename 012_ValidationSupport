@@ -1,0 +1,5 @@
+ValidationSupport support =  new ValidationSupport();
+support.rgisterValidator(TextField, Validator.createEmptyValidator("Text is required"))
+
+CheckBox
+support.rgisterValidator(CheckBox, (Control c, Boolean newVlaue) -> ValidationResult.fromErrorIf(CheckBox, "Should be checked", !newValue));
