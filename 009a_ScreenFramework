@@ -1,0 +1,69 @@
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class ScreensFramework extends Application {
+    private Scene scene;
+    private Group root;
+    private static Stage primaryStage;
+
+    static String mainScreenFile = "/MainWindow.fxml";
+    public static String mainScreenID = "MainWindow";
+
+    static String patientsScreenFile = "/PatientsView.fxml";
+    public static String patientsScreenID = "PatientsView";
+
+    static String staffScreenFile = "/StaffView.fxml";
+    public static String staffScreenID = "StaffView";
+
+    static String mealsScreenFile = "/MealsView.fxml";
+    public static String mealsScreenID = "MealsView";
+
+    static String productsScreenFile = "/ProductsView.fxml";
+    public static String productsScreenID = "ProductsView";
+
+    static String mealsDescriptionFile= "/MealsDescriptionView.fxml";
+    public static String mealsDescriptionScreenID = "MealsDescriptionView";
+
+    private static final Logger frameworkLogger = LogManager.getLogger(ScreensFramework.class);
+
+    public static void main(String[] args) {
+            launch(args);
+    }
+
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+//        Application.setUserAgentStylesheet(STYLESHEET_CASPIAN);
+
+        ScreensFramework.primaryStage = primaryStage;
+
+        ScreensController mainContainer = new ScreensController();
+
+        mainContainer.loadScreen(ScreensFramework.mainScreenID, ScreensFramework.mainScreenFile);
+        mainContainer.loadScreen(ScreensFramework.patientsScreenID, ScreensFramework.patientsScreenFile);
+        mainContainer.loadScreen(ScreensFramework.staffScreenID, ScreensFramework.staffScreenFile);
+        mainContainer.loadScreen(ScreensFramework.mealsScreenID, ScreensFramework.mealsScreenFile);
+        mainContainer.loadScreen(ScreensFramework.productsScreenID, ScreensFramework.productsScreenFile);
+        mainContainer.loadScreen(ScreensFramework.mealsDescriptionScreenID, ScreensFramework.mealsDescriptionFile);
+
+        mainContainer.setScreen(ScreensFramework.mainScreenID);
+
+        root = new Group();
+        root.getChildren().addAll(mainContainer);
+        scene = new Scene(root);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    static void resizeScreen() {
+        if (primaryStage != null) {
+            primaryStage.sizeToScene();
+            primaryStage.centerOnScreen();
+        } else
+            frameworkLogger.warn("Issue with screen resizing at ScreensFramework.resizeScreen()");
+    }
+}
