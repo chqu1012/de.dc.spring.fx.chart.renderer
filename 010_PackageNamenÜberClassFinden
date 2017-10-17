@@ -1,3 +1,5 @@
+Link: https://github.com/roskenet/springboot-javafx-support/blob/master/src/main/java/de/felixroske/jfxsupport/PropertyReaderHelper.java
+
 public static final String determineFilePathFromPackageName(final Class<?> clazz) {	
    return "/" + clazz.getPackage().getName().replace('.', '/') + "/";	
 }
