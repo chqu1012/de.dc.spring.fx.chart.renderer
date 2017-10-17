@@ -1,0 +1,27 @@
+link: https://github.com/roskenet/springboot-javafx-support/blob/master/src/main/java/de/felixroske/jfxsupport/AbstractFxmlView.java
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import org.springframework.stereotype.Component;
+
+@Component
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FXMLView {
+   String value() default "";
+   String title() default "";
+   String stageStyle() default "UTILITY";
+   String[] css() default {};
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+annotation = getFXMLAnnotation();
+
+private FXMLView getFXMLAnnotation() {		
+  final Class<? extends CustomClass> theClass = this.getClass();		
+  final FXMLView annotation = theClass.getAnnotation(FXMLView.class);		
+  return annotation;	
+}
+
+
