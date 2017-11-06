@@ -1,5 +1,6 @@
 * Link: http://www.oodlestechnologies.com/blogs/Encrypt-And-Decrypt-A-File-In-Java
 * Good Example with Spring: https://www.mkyong.com/java/java-symmetric-key-cryptography-example/
+* Javafx File Encryption Example: https://github.com/luisbraganca/file-encryption
 
 ```
 import java.io.File;
