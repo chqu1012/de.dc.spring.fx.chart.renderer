@@ -1,0 +1,38 @@
+Link: https://github.com/RemiKruger/Screenshot/blob/master/src/sample/Main.java
+
+    private void monitorPageStatus(){
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    if(browser.isPageLoaded()){
+                        System.out.println("Page now loaded, taking screenshot...");
+                        saveAsPng();
+                        cancel();
+                    }
+                    else
+                        System.out.println("Loading page...");
+                });
+            }
+        }, 1000, 1000);
+    }
+
+    @FXML
+    private void saveAsPng() {
+        timer.schedule(new TimerTask() {
+            public void run() {
+                Platform.runLater(() -> {
+                    WritableImage image = browser.snapshot(new SnapshotParameters(), null);
+                    File file = new File("images/" + imageName + ".png");
+                    try {
+                        ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                        System.out.println("Screenshot saved as " + imageName + ".png");
+                        System.exit(0);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.exit(0);
+                    }
+                    cancel();
+                });
+            }
+        }, 5000);
+    }
