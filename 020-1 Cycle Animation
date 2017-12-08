@@ -1,3 +1,7 @@
+AnimationCollection
+* https://github.com/Typhon0/AnimateFX/tree/master/src/animatefx/animation
+
+---------------------------------------------------------------------
 link: https://github.com/BekzodjonN/CircleAnimation
 
 import javafx.animation.PathTransition;
