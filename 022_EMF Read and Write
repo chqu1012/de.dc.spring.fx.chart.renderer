@@ -1,28 +1,28 @@
-public class MatlabFile {
+public class EmfFile {
 
-    public MatlabContainer load(String filePath) {
+    public EmfContainer load(String filePath) {
         URI uri = URI.createFileURI(filePath);
 
-        MatlabPackage.eINSTANCE.eClass();
+        EmfPackage.eINSTANCE.eClass();
         Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
         Map<String, Object> m = reg.getExtensionToFactoryMap();
-        m.put("matlab", new XMIResourceFactoryImpl());
+        m.put("emf", new XMIResourceFactoryImpl());
         ResourceSet resSet = new ResourceSetImpl();
         Resource resource = resSet.getResource(uri, true);
-        MatlabContainer model = (MatlabContainer) resource.getContents().get(0);
+        EmfContainer model = (EmfContainer) resource.getContents().get(0);
         return model;
     }
 
-    public void write(MatlabContainer matlab, String path) {
+    public void write(EmfContainer emf, String path) {
         URI uri = URI.createFileURI(path);
         // Initialize the model
-        MatlabPackage.eINSTANCE.eClass();
+        EmfPackage.eINSTANCE.eClass();
         // Retrieve the default factory singleton
-        MatlabFactory factory = MatlabFactory.eINSTANCE;
+        EmfFactory factory = EmfFactory.eINSTANCE;
 
         Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
         Map<String, Object> m = reg.getExtensionToFactoryMap();
-        m.put("matlab", new XMIResourceFactoryImpl());
+        m.put("emf", new XMIResourceFactoryImpl());
 
         // Obtain a new resource set
         ResourceSet resSet = new ResourceSetImpl();
@@ -31,7 +31,7 @@ public class MatlabFile {
         Resource resource = resSet.createResource(uri);
         // Get the first model element and cast it to the right type, in my
         // example everything is hierarchical included in this first node
-        resource.getContents().add(matlab);
+        resource.getContents().add(emf);
 
         try {
             resource.save(Collections.EMPTY_MAP);
