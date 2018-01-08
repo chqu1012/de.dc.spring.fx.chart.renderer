@@ -1,0 +1,43 @@
+public enum Himmelsstamm {
+    Jia, Yi, Bing, Ding, Wu, Ji, Geng, Xin, Ren, Gui;
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public enum Erdenzweig {
+    Ratte, Ochse, Tiger, Hase, Drache, Schlange, Pferd, Ziege, Affe, Hahn, Hund, Schwein;
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public enum Elemnet {
+    Holz1("Holz"),
+    Holz2("Holz"),
+    Feuer1("Feuer"),
+    Feuer2("Feuer"),
+    Erde1("Erde"),
+    Erde2("Erde"),
+    Metall1("Metall"),
+    Metall2("Metall"),
+    Wasser1("Wasser"),
+    Wasser2("Wasser");
+    
+    private String name;
+    
+    private Elemnet(String name) {
+        this.name = name;
+    }
+    
+    public String getName(){
+        return name;
+    }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+public class ChinesischesKalender {
+
+    public Erdenzweig getErdenzweigByZyklus(int zyklus) {
+        int zweig = (zyklus - 1) % Erdenzweig.values().length;
+        return Erdenzweig.values()[zweig];
+    }
+
+    public Elemnet getElementByZyklus(int zyklus) {
+        int element = ((zyklus - 1) % Elemnet.values().length);
+        return Elemnet.values()[element];
+    }
+}
